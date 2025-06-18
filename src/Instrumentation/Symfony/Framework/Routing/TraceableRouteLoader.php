@@ -57,11 +57,11 @@ class TraceableRouteLoader implements LoaderInterface
     {
         try {
             $controller = $route->getDefault('_controller');
-            if (true === str_contains($controller, '::')) {
-                $reflection = new \ReflectionMethod($controller);
-            } else {
-                $reflection = new \ReflectionClass($controller);
-            }
+            $reflection = match (true) {
+                \is_array($controller) => new \ReflectionMethod(\sprintf('%s::%s', $controller[0], $controller[1])),
+                true === \str_contains($controller, '::') => new \ReflectionMethod($controller),
+                default => new \ReflectionClass($controller),
+            };
         } catch (\ReflectionException) {
             return;
         }

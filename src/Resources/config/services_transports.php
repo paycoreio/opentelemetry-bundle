@@ -40,7 +40,7 @@ return static function (ContainerConfigurator $container): void {
             ->parent('open_telemetry.transport_factory.abstract')
             ->tag('open_telemetry.transport_factory')
 
-        ->set('open_telemetry.transport_factory.stream', KafkaTransportFactory::class)
+        ->set('open_telemetry.transport_factory.kafka', KafkaTransportFactory::class)
         ->tag('open_telemetry.transport_factory')
 
         ->set('open_telemetry.transport_factory', TransportFactory::class)

@@ -68,6 +68,10 @@ final class OpenTelemetryExtension extends ConfigurableExtension
         $container->setParameter('open_telemetry.service.version', $config['version']);
         $container->setParameter('open_telemetry.service.environment', $config['environment']);
 
+        if ($container->hasParameter('monolog.additional_channels')) {
+            $container->setParameter('monolog.additional_channels', ['open_telemetry', ...$container->getParameter('monolog.additional_channels')]);
+        }
+
         $container->getDefinition('open_telemetry.resource_info')
             ->setArguments([
                 $config['namespace'],
